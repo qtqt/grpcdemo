@@ -1,0 +1,13 @@
+syntax = "proto3";
+import "google/protobuf/wrappers.proto";
+package order;
+service OrderManagement {
+  rpc getOrderByUnary(google.protobuf.StringValue) returns (Order);
+  rpc getOrderByServerStream(google.protobuf.StringValue) returns ( stream Order);
+  rpc getOrderByClientStream(stream google.protobuf.StringValue) returns (Order);
+  rpc getOrderByTwoWayStream(stream google.protobuf.StringValue) returns (stream Order);
+}
+message Order {
+  string id = 1;
+
+}

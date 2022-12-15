@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainServerActivity">
+
+    <Button
+        android:id="@+id/bt_get_order_unary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="一元RPC"/>
+
+    <Button
+        android:id="@+id/bt_get_order_server_stream"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_get_order_unary"
+        android:text="服务器端流RPC"/>
+
+
+
+    <Button
+        android:id="@+id/bt_get_order_client_stream"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_get_order_server_stream"
+        android:text="客户端流RPC"/>
+
+
+    <Button
+        android:id="@+id/bt_get_order_two_way_stream"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_get_order_client_stream"
+        android:text="双向流RPC"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
