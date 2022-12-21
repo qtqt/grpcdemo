@@ -32,13 +32,23 @@ public class MainServerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Scheduler scheduler = Schedulers.from(Executors.newSingleThreadScheduledExecutor());
         workerServer = scheduler.createWorker();
-        workerServer.schedule(() ->{
-            startServer();
-        });
+
 
         scheduler = Schedulers.from(Executors.newSingleThreadScheduledExecutor());
         workerClient = scheduler.createWorker();
         client = new OrderClient("127.0.0.1",port);
+
+        findViewById(R.id.btn_start_server).setOnClickListener(v -> {
+            workerServer.schedule(() ->{
+                startServer();
+            });
+        });
+
+        findViewById(R.id.btn_stop_server).setOnClickListener(v -> {
+            stopServer();
+        });
+
+
         findViewById(R.id.bt_get_order_unary).setOnClickListener(v -> {
             workerClient.schedule(() ->{
                 getOrderByUnary(id++ +"");
@@ -66,10 +76,23 @@ public class MainServerActivity extends AppCompatActivity {
 
     OrderServer server;
     public void startServer(){
-        server = new OrderServer(port);
-        server.start();
+        if(server == null){
+            server = new OrderServer(port);
+            server.start();
+        }
+    }
+
+
+    public void stopServer(){
+        if(server != null){
+            server.stop();
+            server = null;
+        }
 
     }
+
+
+
 
     OrderClient client;
     public void getOrderByUnary(String id){

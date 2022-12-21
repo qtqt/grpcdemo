@@ -3,6 +3,7 @@ package com.reactnative.grpcserverdemo.gprc;
 import android.util.Log;
 
 import com.google.protobuf.StringValue;
+import com.reactnative.grpcserverdemo.gprc.intercept.MyServer2Interceptor;
 import com.reactnative.grpcserverdemo.gprc.intercept.MyServerInterceptor;
 
 import java.io.IOException;
@@ -32,20 +33,28 @@ public class OrderServer extends OrderManagementGrpc.OrderManagementImplBase {
         Log.d(TAG," start");
         try {
             server = NettyServerBuilder.forPort(port)
-                    .addService(this)
-//                    .addService(ServerInterceptors.intercept(this,new MyServerInterceptor()))
+//                    .addService(this)
+                    .addService(ServerInterceptors.intercept(this,new MyServerInterceptor(),new MyServer2Interceptor()))
                     .build()
                     .start();
         } catch (Exception e) {
             e.printStackTrace();
             Log.d(TAG," start exception = " + e.getMessage());
         }
+
         Log.d(TAG," port = " + port);
         //等待服务关闭,这样是服务一直等待使用的状态了
         try {
             server.awaitTermination();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void stop(){
+        Log.d(TAG," stop server = " + server);
+        if(server != null){
+            server.shutdownNow();
         }
     }
 

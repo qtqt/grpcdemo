@@ -18,8 +18,8 @@ import io.grpc.Status;
  * @Author qitao
  * @Date 2022/12/14 17:43
  */
-public class MyClientInterceptor implements ClientInterceptor {
-    private final String TAG = "MyClientInterceptor";
+public class MyClient2Interceptor implements ClientInterceptor {
+    private final String TAG = "MyClient2Interceptor";
     private static final Metadata.Key<String> TOKEN = Metadata.Key.of("token", Metadata.ASCII_STRING_MARSHALLER);
 
     @Override
@@ -43,7 +43,7 @@ public class MyClientInterceptor implements ClientInterceptor {
 
                         @Override
                         public void onClose(Status status, Metadata trailers) {
-                            Log.d(TAG," interceptCall : onClose status = " + status ) ;
+                            Log.d(TAG," interceptCall : onClose status = " + status);
                             super.onClose(status, trailers);
                         }
 
@@ -73,7 +73,6 @@ public class MyClientInterceptor implements ClientInterceptor {
                 Log.d(TAG," interceptCall : currentThreadName = "+Thread.currentThread().getName()+" cancel  message = " + message + " " + cause.getMessage());
                 super.cancel(message, cause);
             }
-
         };
 
     }
