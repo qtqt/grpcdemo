@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.protobuf.StringValue;
 import com.reactnative.grpcserverdemo.gprc.intercept.MyServer2Interceptor;
 import com.reactnative.grpcserverdemo.gprc.intercept.MyServerInterceptor;
+import com.reactnative.grpcserverdemo.gprc.tracer.CustomServerStreamTracerFactory;
 
 import java.io.IOException;
 
@@ -34,7 +35,9 @@ public class OrderServer extends OrderManagementGrpc.OrderManagementImplBase {
         try {
             server = NettyServerBuilder.forPort(port)
 //                    .addService(this)
+                    .addStreamTracerFactory(new CustomServerStreamTracerFactory())
                     .addService(ServerInterceptors.intercept(this,new MyServerInterceptor(),new MyServer2Interceptor()))
+//                    .addService(ServerInterceptors.intercept(this,new MyServerInterceptor()))
                     .build()
                     .start();
         } catch (Exception e) {
